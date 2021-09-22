@@ -1,8 +1,11 @@
-import { useRef } from "react";
+import { SyntheticEvent, useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import MonacoEditor, { OnChange } from "@monaco-editor/react";
+import { editor } from "monaco-editor";
 import prettier from "prettier";
 import parser from "prettier/parser-babel";
+import { ResizeCallbackData } from "react-resizable";
+import { Resizable } from "./Resizable";
 
 interface CodeEditorProps {
   initialValue: string;
@@ -34,8 +37,14 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
     onChange(formatted.replace(/\n$/, ""));
   };
 
+  const [width, setWidth] = useState<number>(window.innerWidth * 0.5);
+
+  const onResize = (event: SyntheticEvent, { size }: ResizeCallbackData) => {
+    setWidth(size.width);
+  };
+
   return (
-    <ContainerWrapper>
+    <Resizable width={width} onResize={onResize}>
       <EditorContainer>
         <MonacoEditor
           onMount={(editor, monaco) => (ref.current = editor)}
@@ -44,9 +53,10 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
           height="100%"
           language="javascript"
           theme="vs-dark"
+          width="100%"
           options={{
             minimap: { enabled: false },
-            fontSize: 18,
+            fontSize: 17,
             fontLigatures: true,
             fontFamily: "monospace",
             scrollBeyondLastLine: false,
@@ -60,19 +70,12 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
         />
         <button onClick={onFormatClick}>Format</button>
       </EditorContainer>
-    </ContainerWrapper>
+    </Resizable>
   );
 };
 
-const ContainerWrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  background: rgba(30, 30, 30);
-  padding-top: 1rem;
-`;
-
 const EditorContainer = styled.div`
-  flex: 1;
+  width: 100%;
   height: 100%;
   position: relative;
 

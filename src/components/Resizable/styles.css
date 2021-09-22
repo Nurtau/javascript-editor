@@ -1,0 +1,37 @@
+.react-resizable {
+  position: relative;
+}
+.react-resizable-handle {
+  display: inherit;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: border-box;
+  background-color: rgba(30, 30, 30);
+  transition: all 0.3s ease;
+  background-position: bottom right;
+  padding: 3px 3px 3px 3px;
+}
+
+
+.react-resizable-handle-w,
+.react-resizable-handle-e {
+  top: 50%;
+  margin-top: -20px;
+  cursor: ew-resize;
+}
+
+.react-resizable-handle-e {
+  left: 98.5%;
+  box-shadow: 2px 2px 2px white, inset 2px 2px 2px white;
+  transform: rotate(315deg);
+  border-radius: 0px 5px 0px 5px;
+  overflow: hidden;
+  z-index: 15;
+}
+
+.react-resizable-handle:active {
+  background-color: white;
+}

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import styled from "styled-components";
 
 interface PreviewProps {
   code: string;
@@ -32,15 +33,39 @@ export const Preview: React.FC<PreviewProps> = ({ code }) => {
   }, [code]);
 
   return (
-    <>
-      <iframe
+    <PreviewWrapper>
+      <IframeContainer
+        className="preview-wrapper"
         style={{ background: "white" }}
         ref={iframe}
         width={Infinity}
+        height={Infinity}
         sandbox="allow-scripts"
         title="preview"
         srcDoc={html}
       />
-    </>
+    </PreviewWrapper>
   );
 };
+
+const PreviewWrapper = styled.div`
+  height: 100%;
+  position: relative;
+  flex: 2;
+  &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 11;
+  }
+`;
+
+const IframeContainer = styled("iframe")`
+  background: white;
+  width: 100%;
+  height: 100%;
+  border: 0;
+`;

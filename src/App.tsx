@@ -1,23 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { CodeEditor } from "./components/CodeEditor";
 import { Preview } from "./components/Preview";
 import { bundle } from "./bundler";
 import { GlobalStyles } from "./styles/GlobalStyles";
 import { startingCode, showDomError } from "./utils";
+import { useDebounce } from "./hooks/useDebounce";
 
 export const App = () => {
   const [input, setInput] = useState<string>(startingCode());
   const [code, setCode] = useState<string>("");
+  const debouncedCode = useDebounce(input, 500);
 
-  const onButtonClick = async () => {
+  const runCode = async (unbundledCode: string) => {
     try {
-      const bundledCode = await bundle(input);
+      const bundledCode = await bundle(unbundledCode);
       setCode(bundledCode);
     } catch (error: any) {
       setCode(showDomError(error));
     }
   };
+
+  useEffect(() => {
+    runCode(debouncedCode);
+  }, [debouncedCode]);
 
   return (
     <AppContainer>
@@ -26,11 +32,6 @@ export const App = () => {
         <CodeEditor initialValue={input} onChange={setInput} />
         <Preview code={code} />
       </EditorPreviewContainer>
-      <div>
-        <button type="submit" onClick={onButtonClick}>
-          Submit
-        </button>
-      </div>
     </AppContainer>
   );
 };
@@ -48,6 +49,10 @@ const EditorPreviewContainer = styled.div`
   height: 90%;
   width: 95%;
   margin: 2.5%;
-  margin-top: 3.5%;
-  box-shadow: 1px 1px 3px black;
+  /* margin-top: 1.5%; */
+  margin-bottom: 2%;
+  margin-top: 2%;
+  box-shadow: 1px 1px 4px black;
+  position: relative;
+  z-index: 20;
 `;

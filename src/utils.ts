@@ -2,7 +2,7 @@ export const startingCode = () => {
   return `import React from "react";
 import ReactDOM from "react-dom";
 const App = () => <div>Hello World</div>;
-ReactDOM.render(<App/>, document.querySelector("#root"));`;
+ReactDOM.render(<App />, document.querySelector("#root"));`;
 };
 
 export const showDomError = (error: { message: string }) => {

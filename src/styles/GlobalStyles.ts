@@ -11,6 +11,7 @@ export const GlobalStyles = createGlobalStyle`
     height: 100vh;
     width: 100vw;
     background-color: #CBF1F5;
+    background: rgba(210, 210, 220);
   }
 
 `;

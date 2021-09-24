@@ -1,7 +1,6 @@
-import { SyntheticEvent, useRef, useState, useEffect } from "react";
+import { SyntheticEvent, useRef, useState } from "react";
 import styled from "styled-components";
 import MonacoEditor, { OnChange } from "@monaco-editor/react";
-import { editor } from "monaco-editor";
 import prettier from "prettier";
 import parser from "prettier/parser-babel";
 import { ResizeCallbackData } from "react-resizable";
@@ -41,8 +40,9 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
 
   const onResize = (event: SyntheticEvent, { size }: ResizeCallbackData) => {
     setWidth(size.width);
+    console.log(width);
   };
-
+  const fontSize = width > 512 ? 17 : 15;
   return (
     <Resizable width={width} onResize={onResize}>
       <EditorContainer>
@@ -56,7 +56,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
           width="100%"
           options={{
             minimap: { enabled: false },
-            fontSize: 17,
+            fontSize: fontSize,
             fontLigatures: true,
             fontFamily: "monospace",
             scrollBeyondLastLine: false,
@@ -100,5 +100,12 @@ const EditorContainer = styled.div`
   }
   &:hover button {
     opacity: 1;
+  }
+  @media (max-width: 768px) {
+    button {
+      font-size: 12px;
+      padding: 0.3rem 1.0rem;
+      right: 0.8rem;
+    }
   }
 `;

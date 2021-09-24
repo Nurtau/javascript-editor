@@ -8,9 +8,10 @@ import { startingCode, showDomError } from "./utils";
 import { useDebounce } from "./hooks/useDebounce";
 
 export const App = () => {
+
   const [input, setInput] = useState<string>(startingCode());
   const [code, setCode] = useState<string>("");
-  const debouncedCode = useDebounce(input, 500);
+  const debouncedCode = useDebounce(input, 300);
 
   const runCode = async (unbundledCode: string) => {
     try {
@@ -49,10 +50,16 @@ const EditorPreviewContainer = styled.div`
   height: 90%;
   width: 95%;
   margin: 2.5%;
-  /* margin-top: 1.5%; */
-  margin-bottom: 2%;
-  margin-top: 2%;
-  box-shadow: 1px 1px 4px black;
+  margin-bottom: auto;
+  margin-top: 2.8%;
+  box-shadow: 2px 2px 10px black;
   position: relative;
   z-index: 20;
+
+  @media (max-width: 768px) {
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+    margin: 0;
+  }
 `;

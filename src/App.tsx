@@ -40,6 +40,7 @@ export const App = () => {
 const AppContainer = styled.div`
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 `;
 
 const EditorPreviewContainer = styled.div`
@@ -50,8 +51,6 @@ const EditorPreviewContainer = styled.div`
   height: 90%;
   width: 95%;
   margin: 2.5%;
-  margin-bottom: auto;
-  margin-top: 2.8%;
   box-shadow: 2px 2px 10px black;
   position: relative;
   z-index: 20;
